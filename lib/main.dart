@@ -57,14 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> fetchData() async {
-  final response = await http.get(Uri.parse('https://us-central1-no-money-no-honey-okay.cloudfunctions.net/api/hello'));
+    final response = await http.get(Uri.parse('https://us-central1-no-money-no-honey-okay.cloudfunctions.net/api/hello'));
 
-  if (response.statusCode == 200) {
-    return response.body;  // Directly return the response body
-  } else {
-    throw Exception('Failed to load data');
+    if (response.statusCode == 200) {
+      var decoded = json.decode(response.body);
+      return decoded['message'];  // Access the message key from JSON
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
-}
 
 }
 
