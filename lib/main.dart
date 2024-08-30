@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ElevatedButton(
           onPressed: () async {
             try {
-              final result = await fetchData();
+              final result = await fetchHello();
               setState(() {
                 _data = result;
               });
@@ -55,13 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
   }
-
-  Future<String> fetchData() async {
+  
+  Future<String> fetchHello() async {
     final response = await http.get(Uri.parse('https://us-central1-no-money-no-honey-okay.cloudfunctions.net/api/hello'));
-
     if (response.statusCode == 200) {
-      var decoded = json.decode(response.body);
-      return decoded['message'];  // Access the message key from JSON
+      return response.body;
     } else {
       throw Exception('Failed to load data');
     }
